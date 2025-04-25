@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Perpustakaan Digital</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <h1>📚 Sistem Peminjaman Buku</h1>
+
+    <!-- Tambah di bagian <body> -->
+    <section style="text-align:right;">
+        <button onclick="showBookForm()">➕ Tambah Buku</button>
+    </section>
+
+    <section id="add-book-section" style="display:none;">
+        <h2>Tambah Buku Baru</h2>
+        <form id="add-book-form">
+            <input type="text" id="book-title" placeholder="Judul Buku" required />
+            <input type="number" id="book-price" placeholder="Harga Buku" required />
+            <button type="submit">Tambah</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Daftar Buku</h2>
+        <input type="text" id="search-book" placeholder="Cari berdasarkan judul atau ID" oninput="filterBooks()" />
+        <button onclick="loadBooks()">🔄 Muat Buku</button>
+        <ul id="book-list"></ul>
+    </section>
+
+    <section>
+        <h2>Daftar Buku</h2>
+        <button onclick="loadBooks()">🔄 Muat Buku</button>
+        <ul id="book-list"></ul>
+    </section>
+
+    <section>
+        <h2>Form Peminjaman</h2>
+        <form id="borrow-form">
+            <input type="text" id="user-id" placeholder="Nama Pengguna" required />
+            <input type="number" id="book-id" placeholder="Book ID" required /><br>
+            <input type="number" id="duration-days" placeholder="Durasi (hari)" required /><br>
+            <button type="submit">Pinjam Buku</button>
+        </form>
+        <pre id="result"></pre>
+    </section>
+
+    <section>
+        <h2>Riwayat Peminjaman</h2>
+        <button onclick="loadBorrows()">🔄 Lihat Semua</button>
+        <pre id="borrow-list"></pre>
+    </section>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
