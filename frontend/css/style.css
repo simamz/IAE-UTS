@@ -44,3 +44,15 @@ ul {
     border-radius: 4px;
     max-width: 500px;
 }
+
+#user-list,
+#book-list {
+    padding: 0;
+    list-style: none;
+}
+
+#user-list li,
+#book-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+}

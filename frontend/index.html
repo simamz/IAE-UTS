@@ -18,21 +18,30 @@
     <section id="add-book-section" style="display:none;">
         <h2>Tambah Buku Baru</h2>
         <form id="add-book-form">
+            <input type="text" id="book-author" placeholder="Nama Penulis" required />
             <input type="text" id="book-title" placeholder="Judul Buku" required />
-            <input type="number" id="book-price" placeholder="Harga Buku" required />
             <button type="submit">Tambah</button>
         </form>
     </section>
 
-    <section>
-        <h2>Daftar Buku</h2>
-        <input type="text" id="search-book" placeholder="Cari berdasarkan judul atau ID" oninput="filterBooks()" />
-        <button onclick="loadBooks()">🔄 Muat Buku</button>
-        <ul id="book-list"></ul>
+
+    <section id="add-user-section">
+        <h2>Tambah User</h2>
+        <form id="add-user-form">
+            <input type="text" id="user-name" placeholder="Nama User Baru" required />
+            <button type="submit">Tambah User</button>
+        </form>
     </section>
+
+    <section id="user-list-section">
+        <h2>Daftar Pengguna</h2>
+        <ul id="user-list"></ul>
+    </section>
+
 
     <section>
         <h2>Daftar Buku</h2>
+        <input type="text" id="search-book" placeholder="Cari berdasarkan judul atau ID" oninput="filterBooks()" />
         <button onclick="loadBooks()">🔄 Muat Buku</button>
         <ul id="book-list"></ul>
     </section>
@@ -51,8 +60,23 @@
     <section>
         <h2>Riwayat Peminjaman</h2>
         <button onclick="loadBorrows()">🔄 Lihat Semua</button>
-        <pre id="borrow-list"></pre>
+        <table id="borrow-table" border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Buku</th>
+                    <th>Pinjam</th>
+                    <th>Jatuh Tempo</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="borrow-body">
+            </tbody>
+        </table>
     </section>
+
 
     <script src="js/app.js"></script>
 </body>

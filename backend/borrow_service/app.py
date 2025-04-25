@@ -4,8 +4,11 @@ import contextlib
 import requests
 from flask import Flask, request, jsonify
 from datetime import datetime, timedelta
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 DB_NAME = "borrow_data.db"
 DB_PATH = os.path.join(os.path.dirname(__file__), DB_NAME)
 
@@ -124,6 +127,18 @@ def update_expired_statuses():
             WHERE status = 'Aktif' AND DATE(due_date) < DATE(?)
         ''', (today,))
         conn.commit()
+
+@app.route("/borrows/<int:borrow_id>", methods=["DELETE"])
+def delete_borrow(borrow_id):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM borrows WHERE id = ?", (borrow_id,))
+            conn.commit()
+        return jsonify({"message": f"Borrow ID {borrow_id} dihapus"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     init_db()
