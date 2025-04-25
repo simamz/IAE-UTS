@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Sistem Peminjaman Buku</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -12,48 +14,54 @@
             <h2>📚 Perpustakaan</h2>
             <ul class="menu">
                 <li onclick="showSection('book-section')">📖 Daftar Buku</li>
-                <li onclick="showSection('user-section')">👤 Pengguna</li>
                 <li onclick="showSection('form-section')">📝 Form Peminjaman</li>
+                <li onclick="showSection('user-section')">👤 Pengguna</li>
                 <li onclick="showSection('history-section')">📂 Riwayat</li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="content">
-            <!-- Buku -->
+
+            <!-- SECTION: Buku -->
             <section id="book-section" class="section active">
                 <h2>📖 Daftar Buku</h2>
                 <button onclick="showBookForm()">➕ Tambah Buku</button>
                 <div id="add-book-form-wrapper" style="display:none;">
-                    <input type="text" id="book-author" placeholder="Nama Penulis">
-                    <input type="text" id="book-title" placeholder="Judul Buku">
-                    <button onclick="tambahBuku()">Tambah</button>
+                    <form id="add-book-form">
+                        <input type="text" id="book-author" placeholder="Nama Penulis" />
+                        <input type="text" id="book-title" placeholder="Judul Buku" />
+                        <button type="submit">Tambah</button>
+                    </form>
                 </div>
                 <input type="text" id="search-book" placeholder="Cari berdasarkan judul/ID" oninput="filterBooks()">
                 <button onclick="loadBooks()">🔄 Muat Buku</button>
                 <ul id="book-list"></ul>
             </section>
 
-            <!-- Pengguna -->
+            <!-- SECTION: Pengguna -->
             <section id="user-section" class="section">
                 <h2>👤 Tambah Pengguna</h2>
-                <input type="text" id="user-name" placeholder="Nama User Baru">
-                <button onclick="tambahUser()">Tambah User</button>
+                <form id="add-user-form">
+                    <input type="text" id="user-name" placeholder="Nama User Baru">
+                    <button type="submit">Tambah User</button>
+                </form>
                 <h3>Daftar Pengguna</h3>
                 <ul id="user-list"></ul>
             </section>
 
-            <!-- Form Peminjaman -->
+            <!-- SECTION: Form Peminjaman -->
             <section id="form-section" class="section">
                 <h2>📝 Form Peminjaman</h2>
-                <input type="text" id="user-id" placeholder="Nama Pengguna">
-                <input type="number" id="book-id" placeholder="Book ID">
-                <input type="number" id="duration-days" placeholder="Durasi (hari)">
-                <button onclick="pinjamBuku()">Pinjam Buku</button>
-                <pre id="result"></pre>
+                <form id="borrow-form">
+                    <input type="text" id="user-id" placeholder="Nama Pengguna" required />
+                    <input type="number" id="book-id" placeholder="Book ID" required /><br>
+                    <input type="number" id="duration-days" placeholder="Durasi (hari)" required /><br>
+                    <button type="submit">Pinjam Buku</button>
+                </form>
             </section>
 
-            <!-- Riwayat -->
+            <!-- SECTION: Riwayat -->
             <section id="history-section" class="section">
                 <h2>📂 Riwayat Peminjaman</h2>
                 <button onclick="loadBorrows()">🔄 Lihat Semua</button>
@@ -61,7 +69,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>User</th>
+                            <th>Nama Peminjam</th>
                             <th>Buku</th>
                             <th>Pinjam</th>
                             <th>Jatuh Tempo</th>
@@ -72,6 +80,7 @@
                     <tbody id="borrow-body"></tbody>
                 </table>
             </section>
+
         </main>
     </div>
 
@@ -88,6 +97,19 @@
             const form = document.getElementById('add-book-form-wrapper');
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
+
+        async function addUser() {
+            const res = await fetch('/api/add-user', {
+                method: 'POST',
+                body: JSON.stringify({ name: document.getElementById('user-name').value }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await res.json();
+            alert("User berhasil ditambahkan");
+            await loadUsers();
+            alert("Data pengguna berhasil dimuat ulang");
+        }
     </script>
 </body>
+
 </html>
